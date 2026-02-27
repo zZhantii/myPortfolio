@@ -9,7 +9,7 @@
             </button>
 
             <div class="carousel-viewport">
-                <div class="carousel-track" :style="{ transform: `translateX(-${currentIndex * (100 / 3)}%)` }">
+                <div class="carousel-track" :style="{ transform: `translateX(-${currentIndex * (100 / visibleCards)}%)` }">
 
                     <article v-for="(project, index) in projects" :key="index" class="card">
 
@@ -69,7 +69,7 @@
                 </div>
             </div>
 
-            <button class="nav-arrow right" @click="next" :disabled="currentIndex >= projects.length - 3">
+            <button class="nav-arrow right" @click="next" :disabled="currentIndex >= maxIndex">
                 →
             </button>
 
@@ -78,11 +78,20 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 
 const currentIndex = ref(0)
 
 const projects = [
+    {
+        title: 'Portfolio',
+        description: '',
+        img: '/img/main_portfolio.webp',
+        github: 'https://github.com/zZhantii/myPortfolio',
+        stack: [
+            'Vue 3'
+        ]
+    },
     {
         title: 'ECO-SHARE',
         description: 'Plataforma web de movilidad sostenible desarrollada con arquitectura MVC utilizando Vue 3 y Laravel. Permite publicar y reservar trayectos, dividir automáticamente gastos de combustible, gestionar valoraciones y visualizar rutas en tiempo real mediante integración con Google Maps API. Incluye panel de administración, roles y sistema de autenticación seguro.',
@@ -128,8 +137,35 @@ const projects = [
     }
 ];
 
+
+
+const visibleCards = ref(3)
+
+const updateVisibleCards = () => {
+    if (window.innerWidth <= 768) {
+        visibleCards.value = 1
+    } else if (window.innerWidth <= 1024) {
+        visibleCards.value = 2
+    } else {
+        visibleCards.value = 3
+    }
+}
+
+onMounted(() => {
+    updateVisibleCards()
+    window.addEventListener('resize', updateVisibleCards)
+})
+
+onUnmounted(() => {
+    window.removeEventListener('resize', updateVisibleCards)
+})
+
+const maxIndex = computed(() =>
+    projects.length - visibleCards.value
+)
+
 const next = () => {
-    if (currentIndex.value < projects.length - 3) {
+    if (currentIndex.value < maxIndex.value) {
         currentIndex.value++
     }
 }
@@ -289,6 +325,9 @@ const prev = () => {
 /* FLECHAS */
 
 .nav-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: #111;
     color: #fff;
     border: none;
@@ -317,9 +356,78 @@ const prev = () => {
     margin-left: 20px;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1024px) {
+
+    .card {
+        flex: 0 0 50%;
+    }
+
+    .carousel-wrapper {
+        max-width: 900px;
+    }
+
+    .nav-arrow {
+        width: 38px;
+        height: 38px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .cards-section {
+        padding: 100px 0;
+    }
+
+    .carousel-wrapper {
+        max-width: 95%;
+    }
+
     .card {
         flex: 0 0 100%;
+        padding: 0 10px;
+    }
+
+    .card-image img {
+        height: 200px;
+    }
+
+    .card-content {
+        padding: 20px;
+    }
+
+    .nav-arrow {
+        position: absolute;
+        top: auto;
+        bottom: -60px;
+    }
+
+    .left {
+        left: 35%;
+    }
+
+    .right {
+        right: 35%;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .card-image img {
+        height: 180px;
+    }
+
+    .description {
+        -webkit-line-clamp: 4;
+        font-size: 0.9rem;
+    }
+
+    .stack {
+        gap: 6px;
+    }
+
+    .badge {
+        font-size: 0.7rem;
+        padding: 5px 8px;
     }
 }
 </style>
