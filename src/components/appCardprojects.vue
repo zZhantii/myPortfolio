@@ -84,15 +84,6 @@ const currentIndex = ref(0)
 
 const projects = [
     {
-        title: 'Portfolio',
-        description: '',
-        img: '/img/main_portfolio.webp',
-        github: 'https://github.com/zZhantii/myPortfolio',
-        stack: [
-            'Vue 3'
-        ]
-    },
-    {
         title: 'ECO-SHARE',
         description: 'Plataforma web de movilidad sostenible desarrollada con arquitectura MVC utilizando Vue 3 y Laravel. Permite publicar y reservar trayectos, dividir automáticamente gastos de combustible, gestionar valoraciones y visualizar rutas en tiempo real mediante integración con Google Maps API. Incluye panel de administración, roles y sistema de autenticación seguro.',
         img: '/img/img_main_ECO-SHARE.webp',

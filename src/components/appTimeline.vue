@@ -5,24 +5,17 @@
             <h2 class="section-title">Formación</h2>
 
             <div class="timeline">
-
-                <!-- ITEM -->
-                <div class="timeline-item completed">
+                <!-- ITEM ACTUAL -->
+                <div class="timeline-item current">
                     <div class="timeline-marker"></div>
 
                     <div class="timeline-card">
-                        <span class="timeline-year">2023</span>
+                        <span class="timeline-year">En curso</span>
 
                         <div class="timeline-block">
-                            <h3>Bachillerato Tecnológico</h3>
-                            <p class="institution">IES Joan Oró · Martorell</p>
-                            <p>Bases de lógica, algoritmia y resolución de problemas.</p>
-                        </div>
-
-                        <div class="timeline-block">
-                            <h3>Socorrismo en instalaciones acuáticas</h3>
-                            <p class="institution">Cruz Roja · Barcelona</p>
-                            <p>Formación en rescate, prevención y primeros auxilios.</p>
+                            <h3>Ingeniería Informática</h3>
+                            <p class="institution">Universidad de Lleida · Igualada</p>
+                            <p>Arquitectura de sistemas, estructuras de datos y desarrollo avanzado.</p>
                         </div>
                     </div>
                 </div>
@@ -48,17 +41,23 @@
                     </div>
                 </div>
 
-                <!-- ITEM ACTUAL -->
-                <div class="timeline-item current">
+                <!-- ITEM -->
+                <div class="timeline-item completed">
                     <div class="timeline-marker"></div>
 
                     <div class="timeline-card">
-                        <span class="timeline-year">En curso</span>
+                        <span class="timeline-year">2023</span>
 
                         <div class="timeline-block">
-                            <h3>Ingeniería Informática</h3>
-                            <p class="institution">Universidad de Lleida · Igualada</p>
-                            <p>Arquitectura de sistemas, estructuras de datos y desarrollo avanzado.</p>
+                            <h3>Bachillerato Tecnológico</h3>
+                            <p class="institution">IES Joan Oró · Martorell</p>
+                            <p>Bases de lógica, algoritmia y resolución de problemas.</p>
+                        </div>
+
+                        <div class="timeline-block">
+                            <h3>Socorrismo en instalaciones acuáticas</h3>
+                            <p class="institution">Cruz Roja · Barcelona</p>
+                            <p>Formación en rescate, prevención y primeros auxilios.</p>
                         </div>
                     </div>
                 </div>

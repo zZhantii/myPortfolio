@@ -15,9 +15,9 @@ useScrollReveal();
 <template>
     <appHeader />
     <main>
-        <appCarousel />
-    
-        <appHerosection/>
+        <appHerosection />
+
+        <!-- <appCarousel />       -->
 
         <appSkills />
     
