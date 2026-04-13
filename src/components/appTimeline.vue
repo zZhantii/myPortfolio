@@ -1,65 +1,103 @@
-<template>
-    <section id="academy" class="timeline-section">
-        <div class="timeline-container">
+<script setup>
+import { computed, inject } from 'vue'
 
-            <h2 class="section-title">Formación</h2>
+const lang = inject('lang')
+
+const t = computed(() => ({
+    es: {
+        label: 'Formación',
+        heading: 'Mi camino\nformativo',
+        current: 'En curso',
+        items: [
+            {
+                year: 'En curso',
+                current: true,
+                entries: [
+                    { title: 'Ingeniería Informática', org: 'Universidad de Lleida · Igualada', desc: 'Arquitectura de sistemas, estructuras de datos y desarrollo avanzado.' }
+                ]
+            },
+            {
+                year: '2025',
+                entries: [
+                    { title: 'FP Grado Superior DAW', org: 'IES Bernat el Ferrer · Molins de Rei', desc: 'Desarrollo web moderno con proyectos reales end-to-end.' },
+                    { title: 'Prácticas Profesionales', org: 'ROHU Innovations · La Palma de Cervelló', desc: 'Desarrollo frontend y optimización de interfaces de usuario.' }
+                ]
+            },
+            {
+                year: '2023',
+                entries: [
+                    { title: 'Bachillerato Tecnológico', org: 'IES Joan Oró · Martorell', desc: 'Fundamentos de lógica, algoritmia y resolución de problemas técnicos.' },
+                    { title: 'Socorrismo Acuático', org: 'Cruz Roja · Barcelona', desc: 'Formación certificada en rescate acuático, prevención y primeros auxilios.' }
+                ]
+            }
+        ]
+    },
+    en: {
+        label: 'Education',
+        heading: 'My learning\njourney',
+        current: 'Ongoing',
+        items: [
+            {
+                year: 'Ongoing',
+                current: true,
+                entries: [
+                    { title: 'Computer Engineering', org: 'University of Lleida · Igualada', desc: 'Systems architecture, data structures and advanced development.' }
+                ]
+            },
+            {
+                year: '2025',
+                entries: [
+                    { title: 'Higher Vocational DAW', org: 'IES Bernat el Ferrer · Molins de Rei', desc: 'Modern web development with real end-to-end projects.' },
+                    { title: 'Professional Internship', org: 'ROHU Innovations · La Palma de Cervelló', desc: 'Frontend development and user interface optimization.' }
+                ]
+            },
+            {
+                year: '2023',
+                entries: [
+                    { title: 'Technology Baccalaureate', org: 'IES Joan Oró · Martorell', desc: 'Fundamentals of logic, algorithms and technical problem solving.' },
+                    { title: 'Aquatic Lifeguard', org: 'Red Cross · Barcelona', desc: 'Certified training in aquatic rescue, prevention and first aid.' }
+                ]
+            }
+        ]
+    }
+}[lang.value]))
+</script>
+
+<template>
+    <section id="timeline" class="timeline-section">
+        <div class="timeline-wrap">
+
+            <div class="timeline-header reveal">
+                <span class="section-label">{{ t.label }}</span>
+                <h2 class="section-heading">
+                    Mi camino <em>formativo</em>
+                </h2>
+            </div>
 
             <div class="timeline">
-                <!-- ITEM ACTUAL -->
-                <div class="timeline-item current">
-                    <div class="timeline-marker"></div>
 
-                    <div class="timeline-card">
-                        <span class="timeline-year">En curso</span>
+                <!-- Vertical line -->
+                <div class="t-line" aria-hidden="true" />
 
-                        <div class="timeline-block">
-                            <h3>Ingeniería Informática</h3>
-                            <p class="institution">Universidad de Lleida · Igualada</p>
-                            <p>Arquitectura de sistemas, estructuras de datos y desarrollo avanzado.</p>
+                <div class="t-item reveal" v-for="(item, i) in t.items" :key="i"
+                    :class="[`reveal-delay-${i + 1}`, { 'is-current': item.current }]">
+                    <div class="t-year">
+                        <span :class="['year-badge', { current: item.current }]">
+                            {{ item.year }}
+                        </span>
+                    </div>
+
+                    <div class="t-dot" :class="{ current: item.current }" />
+
+                    <div class="t-content">
+                        <div class="t-entry" v-for="(entry, j) in item.entries" :key="j"
+                            :class="{ 'has-divider': j > 0 }">
+                            <h3 class="entry-title">{{ entry.title }}</h3>
+                            <p class="entry-org">{{ entry.org }}</p>
+                            <p class="entry-desc">{{ entry.desc }}</p>
                         </div>
                     </div>
-                </div>
 
-                <!-- ITEM -->
-                <div class="timeline-item completed">
-                    <div class="timeline-marker"></div>
-
-                    <div class="timeline-card">
-                        <span class="timeline-year">2025</span>
-
-                        <div class="timeline-block">
-                            <h3>FP Grado Superior DAW</h3>
-                            <p class="institution">IES Bernat el Ferrer · Molins de Rei</p>
-                            <p>Desarrollo web moderno con proyectos reales.</p>
-                        </div>
-
-                        <div class="timeline-block">
-                            <h3>Prácticas Profesionales</h3>
-                            <p class="institution">ROHU Innovations · La Palma de Cervelló</p>
-                            <p>Desarrollo frontend y optimización de interfaces.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- ITEM -->
-                <div class="timeline-item completed">
-                    <div class="timeline-marker"></div>
-
-                    <div class="timeline-card">
-                        <span class="timeline-year">2023</span>
-
-                        <div class="timeline-block">
-                            <h3>Bachillerato Tecnológico</h3>
-                            <p class="institution">IES Joan Oró · Martorell</p>
-                            <p>Bases de lógica, algoritmia y resolución de problemas.</p>
-                        </div>
-
-                        <div class="timeline-block">
-                            <h3>Socorrismo en instalaciones acuáticas</h3>
-                            <p class="institution">Cruz Roja · Barcelona</p>
-                            <p>Formación en rescate, prevención y primeros auxilios.</p>
-                        </div>
-                    </div>
                 </div>
 
             </div>
@@ -70,127 +108,139 @@
 
 <style scoped>
 .timeline-section {
-    padding: 140px 0;
-    background: #f9f9f9;
+    padding: 120px 40px;
+    background: var(--bg2);
 }
 
-.timeline-container {
+.timeline-wrap {
     max-width: 900px;
     margin: 0 auto;
-    padding: 0 40px;
 }
 
-.section-title {
-    font-size: 2rem;
-    font-weight: 500;
+.timeline-header {
     margin-bottom: 80px;
-    text-align: center;
 }
 
-/* TIMELINE BASE */
-
+/* Timeline layout */
 .timeline {
     position: relative;
-    padding-left: 40px;
 }
 
-.timeline::before {
-    content: "";
+.t-line {
     position: absolute;
-    left: 12px;
+    left: 140px;
     top: 0;
-    width: 2px;
+    width: 1px;
     height: 100%;
-    background: rgba(0, 0, 0, 0.08);
+    background: var(--border);
 }
 
-/* ITEM */
-
-.timeline-item {
-    position: relative;
-    margin-bottom: 80px;
+.t-item {
+    display: grid;
+    grid-template-columns: 140px 16px 1fr;
+    gap: 0 32px;
+    margin-bottom: 60px;
+    align-items: start;
 }
 
-/* MARKER */
-
-.timeline-marker {
-    position: absolute;
-    left: 4px;
-    top: 8px;
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: #111;
-    transition: 0.3s ease;
+.t-year {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 4px;
 }
 
-.timeline-item.current .timeline-marker {
-    background: white;
-    border: 2px solid #111;
-}
-
-/* CARD */
-
-.timeline-card {
-    background: #ffffff;
-    padding: 32px;
-    border-radius: 16px;
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    transition: 0.3s ease;
-}
-
-.timeline-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.08);
-}
-
-/* YEAR */
-
-.timeline-year {
-    display: inline-block;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
+.year-badge {
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    opacity: 0.5;
-    margin-bottom: 20px;
+    color: var(--text-muted);
+    font-weight: 400;
+    white-space: nowrap;
 }
 
-/* CONTENT */
-
-.timeline-block+.timeline-block {
-    margin-top: 24px;
-    padding-top: 24px;
-    border-top: 1px solid rgba(0, 0, 0, 0.06);
+.year-badge.current {
+    color: var(--accent);
 }
 
-.timeline-block h3 {
-    font-size: 1.2rem;
-    margin-bottom: 6px;
-    font-weight: 600;
+.t-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--text-muted);
+    margin-top: 6px;
+    flex-shrink: 0;
+    position: relative;
+    transition: background 0.2s ease;
 }
 
-.institution {
-    font-size: 0.9rem;
-    opacity: 0.6;
+.t-dot.current {
+    background: var(--accent);
+    box-shadow: 0 0 0 4px var(--accent-glow);
+}
+
+.t-content {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    transition: all 0.3s var(--ease);
+}
+
+.t-content:hover {
+    border-color: rgba(200, 184, 154, 0.2);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.1);
+}
+
+.t-entry {}
+
+.t-entry.has-divider {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+}
+
+.entry-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+
+.entry-org {
+    font-size: 0.78rem;
+    color: var(--accent);
     margin-bottom: 8px;
+    letter-spacing: 0.02em;
 }
 
-.timeline-block p {
-    font-size: 0.95rem;
+.entry-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
     line-height: 1.6;
-    opacity: 0.8;
+    font-weight: 300;
 }
 
-/* RESPONSIVE */
-
-@media (max-width: 768px) {
-    .timeline {
-        padding-left: 30px;
+/* Responsive */
+@media (max-width: 640px) {
+    .timeline-section {
+        padding: 80px 24px;
     }
 
-    .timeline-card {
-        padding: 24px;
+    .t-line {
+        left: 80px;
+    }
+
+    .t-item {
+        grid-template-columns: 80px 12px 1fr;
+        gap: 0 16px;
+    }
+
+    .year-badge {
+        font-size: 0.62rem;
+    }
+
+    .t-content {
+        padding: 20px;
     }
 }
 </style>

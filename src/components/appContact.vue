@@ -1,32 +1,75 @@
+<script setup>
+import { computed, inject } from 'vue'
+
+const lang = inject('lang')
+
+const t = computed(() => ({
+    es: {
+        label: 'Contacto',
+        heading: '¿Hablamos?',
+        sub: 'Estoy abierto a nuevas oportunidades, proyectos freelance o simplemente charlar sobre tecnología.',
+        email: 'Email',
+        github: 'GitHub',
+        linkedin: 'LinkedIn',
+        copy: '¡Copiado!'
+    },
+    en: {
+        label: 'Contact',
+        heading: "Let's talk",
+        sub: "I'm open to new opportunities, freelance projects or just chatting about tech.",
+        email: 'Email',
+        github: 'GitHub',
+        linkedin: 'LinkedIn',
+        copy: 'Copied!'
+    }
+}[lang.value]))
+
+const contacts = [
+    {
+        key: 'email',
+        label: () => t.value.email,
+        value: 'santiagoolozadab@gmail.com',
+        href: 'mailto:santiagoolozadab@gmail.com',
+    },
+    {
+        key: 'github',
+        label: () => t.value.github,
+        value: 'github.com/zZhantii',
+        href: 'https://github.com/zZhantii',
+    },
+    {
+        key: 'linkedin',
+        label: () => t.value.linkedin,
+        value: 'linkedin.com/in/santiago-lozada',
+        href: 'https://www.linkedin.com/in/santiago-lozada-551783331/',
+    },
+]
+</script>
+
 <template>
     <section id="contact" class="contact-section">
-        <div class="contact-container">
+        <!-- Background pattern -->
+        <div class="contact-bg" aria-hidden="true">
+            <div class="bg-circle" />
+        </div>
 
-            <h2>Contacto</h2>
-            <p>
-                Si te interesa mi perfil o quieres hablar sobre un proyecto,
-                puedes contactarme aquí.
-            </p>
+        <div class="contact-wrap reveal">
 
-            <div class="contact-list">
-                <div class="contact-item">
-                    <span>Email</span>
-                    <a href="https://mail.google.com/mail/u/0/?pli=1#inbox?compose=GTvVlcSMTtfzFMlxGlZRFLSQvntKwjGgKsbJPVWRjVxPxmxTMshhSPTdwMxSTsdLZDHGCstDXfhhQ">
-                        santiagoolozadab@gmail.com
-                    </a>
-                </div>
+            <div class="contact-left">
+                <span class="section-label">{{ t.label }}</span>
+                <h2 class="section-heading contact-heading">
+                    {{ t.heading }}
+                </h2>
+                <p class="contact-sub">{{ t.sub }}</p>
+            </div>
 
-                <div class="contact-item">
-                    <span>GitHub</span>
-                    <a href="https://github.com/zZhantii">
-                        github.com/zZhantii
-                    </a>
-                </div>
-
-                <div class="contact-item">
-                    <span>LinkedIn</span>
-                    <a href="https://www.linkedin.com/in/santiago-lozada-551783331/" target="_blank">
-                       linkedin.com/in/santiago-lozada-551783331
+            <div class="contact-right">
+                <div class="contact-list">
+                    <a class="contact-item reveal" v-for="(c, i) in contacts" :key="c.key" :href="c.href"
+                        target="_blank" :class="`reveal-delay-${i + 1}`">
+                        <span class="contact-item-label">{{ c.label() }}</span>
+                        <span class="contact-item-value">{{ c.value }}</span>
+                        <span class="contact-item-arrow">↗</span>
                     </a>
                 </div>
             </div>
@@ -37,64 +80,123 @@
 
 <style scoped>
 .contact-section {
-    padding: 120px 0;
-    background: #111;
-    color: #fff;
+    padding: 140px 40px;
+    background: var(--bg3);
+    position: relative;
+    overflow: hidden;
 }
 
-.contact-container {
-    max-width: 800px;
+.contact-bg {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.bg-circle {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    bottom: -200px;
+    right: -100px;
+}
+
+.contact-wrap {
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    position: relative;
+    z-index: 1;
 }
 
-.contact-container h2 {
-    font-size: 2rem;
-    font-weight: 500;
-    margin-bottom: 16px;
+.contact-heading {
+    font-size: clamp(2.5rem, 5vw, 4.5rem) !important;
+    line-height: 1 !important;
+    margin-top: 16px;
 }
 
-.contact-container p {
-    max-width: 500px;
-    font-size: 1rem;
-    opacity: 0.7;
-    margin-bottom: 50px;
+.contact-sub {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.7;
+    margin-top: 20px;
+    font-weight: 300;
+    max-width: 380px;
 }
 
 /* Contact list */
 .contact-list {
     display: flex;
     flex-direction: column;
-    gap: 28px;
+    gap: 4px;
+    margin-top: 8px;
 }
 
-.contact-item span {
-    display: block;
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-    opacity: 0.5;
-    margin-bottom: 6px;
-}
-
-.contact-item a {
-    color: #fff;
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 24px;
+    border: 1px solid var(--border);
+    border-radius: 16px;
     text-decoration: none;
-    font-size: 1rem;
-    position: relative;
+    background: var(--surface);
+    transition: all 0.3s var(--ease);
+    group: true;
 }
 
-.contact-item a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -4px;
-    width: 0;
-    height: 1px;
-    background: white;
-    transition: width .3s ease;
+.contact-item:hover {
+    border-color: var(--accent);
+    background: var(--accent-glow);
+    transform: translateX(6px);
 }
 
-.contact-item a:hover::after {
-    width: 100%;
+.contact-item-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    min-width: 64px;
+    font-weight: 500;
+}
+
+.contact-item-value {
+    flex: 1;
+    font-size: 0.9rem;
+    color: var(--text);
+    font-weight: 300;
+}
+
+.contact-item-arrow {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.contact-item:hover .contact-item-arrow {
+    color: var(--accent);
+    transform: translate(2px, -2px);
+}
+
+@media (max-width: 768px) {
+    .contact-section {
+        padding: 80px 24px;
+    }
+
+    .contact-wrap {
+        grid-template-columns: 1fr;
+        gap: 48px;
+    }
+
+    .contact-item-value {
+        font-size: 0.8rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 }
 </style>

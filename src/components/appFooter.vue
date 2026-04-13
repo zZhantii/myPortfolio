@@ -1,80 +1,79 @@
+<script setup>
+import { computed, inject } from 'vue'
+
+const lang = inject('lang')
+const year = new Date().getFullYear()
+
+const t = computed(() => ({
+    es: { made: 'Diseñado y desarrollado por Santiago Lozada', rights: 'Todos los derechos reservados' },
+    en: { made: 'Designed & developed by Santiago Lozada', rights: 'All rights reserved' }
+}[lang.value]))
+</script>
+
 <template>
     <footer class="footer">
-        <div class="footer-container">
-
-            <span class="name">
-                Santiago Lozada Benitez · Desarrollador Web
-            </span>
-
-            <span class="copy">
-                © {{ year }}
-            </span>
-
-            <div class="links">
+        <div class="footer-inner">
+            <span class="footer-name">SL</span>
+            <p class="footer-copy">{{ t.made }} · © {{ year }}</p>
+            <div class="footer-links">
                 <a href="https://github.com/zZhantii" target="_blank">GitHub</a>
                 <a href="https://www.linkedin.com/in/santiago-lozada-551783331/" target="_blank">LinkedIn</a>
             </div>
-
         </div>
     </footer>
 </template>
 
-<script setup>
-const year = new Date().getFullYear();
-</script>
-
 <style scoped>
 .footer {
-    padding: 40px 0;
-    background: #0f0f0f;
-    color: #ffffff;
+    padding: 32px 40px;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
 }
 
-.footer-container {
-    max-width: 1200px;
+.footer-inner {
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 0 40px;
-
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     gap: 20px;
-
-    font-size: 0.8rem;
-    opacity: 0.7;
 }
 
-.links {
+.footer-name {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.footer-copy {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    letter-spacing: 0.03em;
+}
+
+.footer-links {
     display: flex;
-    gap: 16px;
+    gap: 20px;
 }
 
-.links a {
-    color: white;
+.footer-links a {
+    font-size: 0.75rem;
+    color: var(--text-muted);
     text-decoration: none;
-    position: relative;
+    letter-spacing: 0.05em;
+    transition: color 0.2s ease;
 }
 
-.links a::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -4px;
-    width: 0;
-    height: 1px;
-    background: white;
-    transition: width .3s ease;
+.footer-links a:hover {
+    color: var(--accent);
 }
 
-.links a:hover::after {
-    width: 100%;
-}
-
-/* Responsive */
-@media (max-width: 700px) {
-    .footer-container {
+@media (max-width: 600px) {
+    .footer-inner {
         flex-direction: column;
         text-align: center;
+        gap: 12px;
     }
 }
 </style>
